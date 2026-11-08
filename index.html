@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#05070B">
+<title>TOMZ GUARDIAN AI</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="assets/icon-192.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div class="logo">TOMZ <b>GUARDIAN</b> AI</div>
+  <div class="status"><i id="dot"></i><span id="statusTxt">Online</span></div>
+</header>
+<main>
+  <section class="hero">
+    <p id="greet">Hello.</p>
+    <p class="clock"><span id="time">--:--</span> <small id="date"></small></p>
+    <button id="reactor" class="reactor" aria-label="Talk to Tomz">
+      <span class="ring r1"></span><span class="ring r2"></span><span class="ring r3"></span><span class="core"></span><span class="scan"></span>
+    </button>
+    <div class="wave" id="wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <p id="heard" class="heard" aria-live="polite">Tap the reactor to talk, or type below.</p>
+  </section>
+
+  <section class="card chat">
+    <div id="log" class="log" aria-live="polite"></div>
+    <form id="chatForm" class="row">
+      <input id="chatIn" type="text" placeholder="Ask Tomz about safety…" autocomplete="off" aria-label="Message">
+      <button class="btn" type="submit">Send</button>
+    </form>
+  </section>
+
+  <button id="sosBtn" class="sos">SOS</button>
+
+  <section class="grid">
+    <button class="tile" id="safeToggle" aria-pressed="false">Safety mode<small id="safeState">Off</small></button>
+    <button class="tile" id="contactBtn">Contact<small id="contactState">Not set</small></button>
+    <button class="tile" id="locBtn">Location<small>Tap to get</small></button>
+    <button class="tile" id="flashBtn">Flashlight<small>Check support</small></button>
+  </section>
+
+  <section class="card" id="locCard" hidden>
+    <h2>Your location</h2>
+    <p id="locTxt"></p>
+    <div class="row wrap">
+      <button class="btn" id="locCopy">Copy</button>
+      <button class="btn" id="locShare">Share</button>
+      <a class="btn" id="locMap" target="_blank" rel="noopener">Open in Maps</a>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Safety timer</h2>
+    <p class="timer" id="timerOut">15:00</p>
+    <div class="row wrap">
+      <input id="timerMin" type="number" min="1" max="240" value="15" aria-label="Minutes">
+      <button class="btn" id="tStart">Start</button>
+      <button class="btn ghost" id="tStop">Reset</button>
+    </div>
+    <p class="note">Timers can pause when the app is closed or the phone sleeps. Keep this page open. Tomz cannot notify anyone for you.</p>
+  </section>
+
+  <section class="card">
+    <h2>Settings &amp; privacy</h2>
+    <label>Trusted contact name<input id="cName" type="text"></label>
+    <label>Trusted contact phone<input id="cPhone" type="tel" placeholder="+1234567890"></label>
+    <label>Emergency message (use [LOCATION])<textarea id="msgTpl" rows="3"></textarea></label>
+    <label>Language / ഭാഷ<select id="lang"><option value="en-US">English</option><option value="ml-IN">മലയാളം (Malayalam)</option></select></label>
+    <label class="chk"><input id="lowFx" type="checkbox"> Reduce animations</label>
+    <label class="chk"><input id="sound" type="checkbox" checked> Timer sound</label>
+    <label class="chk"><input id="speak" type="checkbox" checked> Speak replies</label>
+    <label>Optional AI backend URL<input id="apiUrl" type="url" placeholder="https://your-server/api/chat"></label>
+    <div class="row wrap">
+      <button class="btn" id="save">Save</button>
+      <button class="btn ghost" id="clear">Clear all local data</button>
+    </div>
+    <p class="note">Everything stays on this phone. The mic and location are used only when you tap. Nothing is recorded, tracked or uploaded. If you set a backend URL, your chat messages are sent to it.</p>
+  </section>
+</main>
+
+<div id="sosModal" class="modal" hidden role="dialog" aria-modal="true" aria-labelledby="sosH">
+  <div class="sheet">
+    <h2 id="sosH">Emergency help</h2>
+    <p>Nothing has been sent. Choose what to do. Your phone will open the call or message screen for you to confirm.</p>
+    <textarea id="sosMsg" rows="4" aria-label="Emergency message"></textarea>
+    <p id="sosLoc" class="note"></p>
+    <div class="col">
+      <a class="btn big" id="sosCall">Call trusted contact</a>
+      <a class="btn big" id="sosSms">Write SMS to contact</a>
+      <button class="btn" id="sosFetch">Add my location</button>
+      <button class="btn" id="sosCopy">Copy message</button>
+      <a class="btn" id="sosMap" target="_blank" rel="noopener" hidden>Open location in Maps</a>
+      <button class="btn ghost" id="sosCancel">Cancel</button>
+    </div>
+    <p class="note">If you are in danger, call your local emergency number yourself.</p>
+  </div>
+</div>
+
+<div id="alarm" class="modal alarm" hidden role="alertdialog">
+  <div class="sheet">
+    <h2>Check-in time is up</h2>
+    <p>Are you safe?</p>
+    <div class="col">
+      <button class="btn big" id="safeBtn">I am safe</button>
+      <a class="btn" id="alCall">Call trusted contact</a>
+      <button class="btn ghost" id="alSos">Open SOS</button>
+    </div>
+  </div>
+</div>
+<div id="toast" class="toast" role="status"></div>
+<script src="app.js"></script>
+</body>
+</html>
